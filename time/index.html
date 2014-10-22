@@ -1,0 +1,33 @@
+<html>
+<title>YCool</title>
+<script type="text/javascript">
+	var myTimer = setInterval(function () {updateCurrentTimeStamp()}, 1000);
+    
+	function getTimeStamp() {
+		return Math.round(new Date().getTime()/1000);
+	}
+	function updateCurrentTimeStamp() {
+		// clearInterval(myTimer);
+        document.getElementById("currentTimeStamp").value = getTimeStamp();
+        // console.log("time:", getTimeStamp())
+	}
+	function convert() {
+		var time_stamp = document.getElementById("timeStamp").value 
+		var time = document.getElementById("time").value 
+		if (time_stamp != "") {
+			var unixTimestamp = new Date(time_stamp * 1000)
+			document.getElementById("time").value = unixTimestamp.toLocaleString()
+		} else if (time != null) {
+			var date = Date.parse(time);
+			console.log("date", date)
+			document.getElementById("timeStamp").value = date.getTime() / 1000
+		}
+	}
+</script>
+<body>
+	Current timestamp: <input id='currentTimeStamp' readonly> 
+	<button onclick="clearInterval(myTimer)">Stop time</button> <br>
+	From timestamp: <input id='timeStamp' >  <button onclick="convert()">Convert</button> Time: <input id='time' size=40> 
+
+</body>
+</html>

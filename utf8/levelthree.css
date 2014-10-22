@@ -1,0 +1,15 @@
+#topbar {
+	text-align: left;
+	font-size: 200%;
+	color: #005a9c;
+	background-color: #eee;
+	padding: 5px;
+	padding-left: 10px;
+	margin: 0;
+	margin-right: 28%;
+	}
+.leadin { font-weight: bold; }
+
+#toc{ margin-bottom: 1em; }
+.toc1 { margin-left: 2em; margin-right: 1em; margin-bottom: 4px; }
+.toc2 { margin-left: 2em; margin-right: 1em; font-size: 80%; margin-bottom: 2px; }
