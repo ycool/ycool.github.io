@@ -54,8 +54,8 @@ game.start = function(){
     this.v = new goog.math.Vec2(this.STEP, 0);
     lime.scheduleManager.scheduleWithDelay(this.moveAStep, this, 200);
 
-    // goog.events.listen(this.board,['click'], 
-    //     this.handleKeyPressed, false, this);
+    goog.events.listen(this.board,['mouseup', 'touchend'], 
+        this.handleClick, false, this);
 
     goog.events.listen(goog.global, ['keydown'], 
         this.handleKeyPressed, false, this);
@@ -88,6 +88,31 @@ game.start = function(){
 	// set current scene active
 	director.replaceScene(scene);
 
+}
+
+game.handleClick = function(e) {
+    console.log(e.position);
+    var pos = e.position;
+    var train_pos = this.train.getPosition();
+    var xdiff = Math.abs(pos.x - train_pos.x);
+    var ydiff = Math.abs(pos.y - train_pos.y);
+    if (xdiff > ydiff) {
+        if (pos.x > train_pos.x) {
+            this.v.x = this.STEP;
+            this.v.y = 0;
+        } else {
+            this.v.x = -this.STEP;
+            this.v.y = 0;
+        }
+    } else {
+        if (pos.y > train_pos.y) {
+            this.v.x = 0;
+            this.v.y = this.STEP;
+        } else {
+            this.v.x = 0;
+            this.v.y = -this.STEP;
+        }        
+    }
 }
 
 game.handleKeyPressed = function(e) {
