@@ -13,10 +13,15 @@ goog.require('lime.animation.FadeTo');
 goog.require('lime.animation.ScaleTo');
 goog.require('lime.animation.MoveTo');
 goog.require('goog.events.KeyCodes');
+goog.require('lime.audio.Audio');
+goog.require('lime.GlossyButton');
+goog.require('lime.Button');
+
 
 //constant iPad size
 game.WIDTH = 720;
 game.HEIGHT = 1004;
+
 
 // entrypoint
 game.start = function(){
@@ -47,8 +52,30 @@ game.start = function(){
         .setFill('assets/train.png');
     var train = this.train;    
 
+    this.btn_bell = new lime.GlossyButton('bell') 
+        .setSize(70, 50)
+        .setPosition(50, 50);
+
+
+    this.btn_whistle = new lime.GlossyButton('whistle')
+        .setSize(70, 50)
+        .setPosition(50, 120);
+    this.btn_bell.bellSound = new lime.audio.Audio('assets/bell.mp3');
+    this.btn_whistle.whistleSound = new lime.audio.Audio('assets/whistle.mp3');
+
+    goog.events.listen(this.btn_bell, 'click', function() {
+        this.bellSound.stop();
+        this.bellSound.play();
+    });    
+    goog.events.listen(this.btn_whistle, 'click', function() {
+        this.whistleSound.stop();
+        this.whistleSound.play();
+    });    
+
     layer.appendChild(this.board);
     layer.appendChild(this.train);
+    layer.appendChild(this.btn_bell);
+    layer.appendChild(this.btn_whistle);
     scene.appendChild(layer);
 
     this.v = new goog.math.Vec2(this.STEP, 0);

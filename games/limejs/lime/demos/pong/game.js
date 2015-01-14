@@ -9,6 +9,8 @@ goog.require('lime.fill.LinearGradient');
 goog.require('pong.Notice');
 goog.require('pong.Player');
 goog.require('lime.audio.Audio');
+goog.require('lime.GlossyButton');
+
 
 pong.Game = function(mode) {
     lime.Sprite.call(this);
