@@ -16,7 +16,7 @@ goog.require('goog.events.KeyCodes');
 goog.require('lime.audio.Audio');
 goog.require('lime.GlossyButton');
 goog.require('lime.Button');
-
+goog.require('goog.math');
 
 //constant iPad size
 game.WIDTH = 720;
@@ -50,7 +50,11 @@ game.start = function(){
         .setAnchorPoint(0, 0)
         .setPosition(50, 250)
         .setFill('assets/train.png');
-    var train = this.train;    
+
+    this.stop_sign = new lime.Sprite().setSize(50, 50)
+        .setPosition(50, 450)
+        .setFill('assets/stop_sign.png')
+        .setOpacity(1);
 
     this.btn_bell = new lime.GlossyButton('bell') 
         .setSize(70, 50)
@@ -76,6 +80,7 @@ game.start = function(){
     layer.appendChild(this.train);
     layer.appendChild(this.btn_bell);
     layer.appendChild(this.btn_whistle);
+    layer.appendChild(this.stop_sign);
     scene.appendChild(layer);
 
     this.v = new goog.math.Vec2(this.STEP, 0);
@@ -87,30 +92,7 @@ game.start = function(){
     goog.events.listen(goog.global, ['keydown'], 
         this.handleKeyPressed, false, this);
 
-    //add some interaction
-    goog.events.listen(train,['mousedown','touchstart'],function(e){
-
-        //animate
-        train.runAction(new lime.animation.Spawn(
-            new lime.animation.FadeTo(.5).setDuration(.2),
-            new lime.animation.ScaleTo(1.5).setDuration(.8)
-        ));
-
-        //let target follow the mouse/finger
-        e.startDrag();
-
-        //listen for end event
-        e.swallow(['mouseup','touchend'],function(){
-            train.runAction(new lime.animation.Spawn(
-                new lime.animation.FadeTo(1),
-                new lime.animation.ScaleTo(1),
-                new lime.animation.MoveTo(this.WIDTH / 2, this.HEIGHT / 2)
-            ));
-
-        });
-
-
-    });
+    this.target_pos = new goog.math.Coordinate(this.WIDTH, this.HEIGHT);
 
 	// set current scene active
 	director.replaceScene(scene);
@@ -120,26 +102,11 @@ game.start = function(){
 game.handleClick = function(e) {
     console.log(e.position);
     var pos = e.position;
-    var train_pos = this.train.getPosition();
-    var xdiff = Math.abs(pos.x - train_pos.x);
-    var ydiff = Math.abs(pos.y - train_pos.y);
-    if (xdiff > ydiff) {
-        if (pos.x > train_pos.x) {
-            this.v.x = this.STEP;
-            this.v.y = 0;
-        } else {
-            this.v.x = -this.STEP;
-            this.v.y = 0;
-        }
-    } else {
-        if (pos.y > train_pos.y) {
-            this.v.x = 0;
-            this.v.y = this.STEP;
-        } else {
-            this.v.x = 0;
-            this.v.y = -this.STEP;
-        }        
-    }
+
+    this.stop_sign.setOpacity(1);
+    this.stop_sign.runAction(new lime.animation.MoveTo(pos));
+
+    this.target_pos = pos;
 }
 
 game.handleKeyPressed = function(e) {
@@ -165,14 +132,21 @@ game.handleKeyPressed = function(e) {
 
 game.moveAStep = function() {
     var pos_start = this.train.getPosition();
+    var pos_target = this.target_pos;
     var pos = pos_start.clone();
-    pos.x += this.v.x;
-    pos.y += this.v.y;
-    if (pos.x < 0 || (pos.x + this.TRAIN_WIDTH) > this.WIDTH) {
-        pos.x = pos_start.x;
-    }
-    if (pos.y < 0 || (pos.y + this.TRAIN_HEIGHT) > this.HEIGHT) {
-        pos.y = pos_start.y
+ 
+    var xdiff = Math.min(Math.abs(pos_start.x - pos_target.x), this.STEP);
+    var ydiff = Math.min(Math.abs(pos_start.y - pos_target.y), this.STEP);
+    if (pos_start.x < pos_target.x) {
+        pos.x += xdiff;
+    } else if (pos_start.x > pos_target.x) {
+        pos.x -= xdiff;
+    } else {
+        if (pos_start.y < pos_target.y) {
+            pos.y += ydiff;
+        } else {
+            pos.y -= ydiff;
+        }
     }
     this.train.setPosition(pos);
 }
