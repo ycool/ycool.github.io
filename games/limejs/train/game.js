@@ -80,7 +80,7 @@ game.start = function(){
         this.sounds[i].play();
         var x = Math.random() * game.WIDTH;
         var y = Math.random() * game.HEIGHT;
-        this.setPosition(x, y);
+        this.runAction(new lime.animation.MoveTo(x, y));
         this.setFontColor(Math.random() * 100, Math.random() * 100, 
             Math.random() * 100);
     });    
