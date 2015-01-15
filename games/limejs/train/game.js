@@ -145,18 +145,18 @@ game.moveAStep = function() {
  
     var xdiff = Math.min(Math.abs(pos_start.x - pos_target.x), this.STEP);
     var ydiff = Math.min(Math.abs(pos_start.y - pos_target.y), this.STEP);
-    if (pos_start.x < pos_target.x) {
-        this.train.runAction(new lime.animation.RotateTo(0).setDuration(0.2));
-        pos.x += xdiff;
-    } else if (pos_start.x > pos_target.x) {
-        this.train.runAction(new lime.animation.RotateTo(0).setDuration(0.2));
-        pos.x -= xdiff;
+    if (pos_start.y < pos_target.y) {
+        this.train.runAction(new lime.animation.RotateTo(90).setDuration(0.2));
+        pos.y += ydiff;
+    } else if (pos_start.y > pos_target.yy) {
+        this.train.runAction(new lime.animation.RotateTo(90).setDuration(0.2));
+        pos.y -= ydiff;
     } else {
-        this.train.runAction(new lime.animation.RotateTo(90).setDuration(.2));
-        if (pos_start.y < pos_target.y) {
-            pos.y += ydiff;
+        this.train.runAction(new lime.animation.RotateTo(0).setDuration(.2));
+        if (pos_start.x < pos_target.x) {
+            pos.x += xdiff;
         } else {
-            pos.y -= ydiff;
+            pos.x -= xdiff;
         }
     }
     this.train.setPosition(pos);
