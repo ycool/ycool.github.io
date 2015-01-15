@@ -68,7 +68,7 @@ game.start = function(){
         new lime.audio.Audio('assets/whistle.mp3')];
     this.btn_sound.sound_index = 0;    
 
-    goog.events.listen(this.btn_sound, 'click', function() {
+    goog.events.listen(this.btn_sound, ['mouseup', 'touchend'], function() {
         this.sound_index = (this.sound_index + 1) % 2;
         if (this.sound_index == 1) {
             this.setText("Daniel");
@@ -148,7 +148,7 @@ game.moveAStep = function() {
     if (pos_start.y < pos_target.y) {
         this.train.runAction(new lime.animation.RotateTo(90).setDuration(0.2));
         pos.y += ydiff;
-    } else if (pos_start.y > pos_target.yy) {
+    } else if (pos_start.y > pos_target.y) {
         this.train.runAction(new lime.animation.RotateTo(90).setDuration(0.2));
         pos.y -= ydiff;
     } else {
