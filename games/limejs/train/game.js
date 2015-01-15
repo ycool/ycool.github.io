@@ -58,8 +58,9 @@ game.start = function(){
         .setFill('assets/stop_sign.png')
         .setOpacity(1);
 
-    this.btn_sound = new lime.Label('Derek') 
-        .setSize(70, 50)
+    this.btn_sound = new lime.Label('') 
+        .setSize(100, 100)
+        .setFill('assets/derek.png')
         .setFontSize(50)
         .setFontWeight('bold')
         .setPosition(50, 50);
@@ -71,9 +72,9 @@ game.start = function(){
     goog.events.listen(this.btn_sound, ['mouseup', 'touchend'], function() {
         this.sound_index = (this.sound_index + 1) % 2;
         if (this.sound_index == 1) {
-            this.setText("Daniel");
+            this.setFill('assets/daniel.png');
         } else {
-            this.setText("Derek");
+            this.setFill('assets/derek.png');
         }
         var i = Math.floor(Math.random() * 2);
         this.sounds[i].stop();
