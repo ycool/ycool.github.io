@@ -34,8 +34,8 @@ game.start = function(){
 	var director = new lime.Director(document.body); //, game.WIDTH, game.HEIGHT);
     director.makeMobileWebAppCapable();
 
-    this.WIDTH = director.getSize().width;
-    this.HEIGHT = director.getSize().height;
+    game.WIDTH = director.getSize().width;
+    game.HEIGHT = director.getSize().height;
 
     var scene = new lime.Scene();
     var layer = new lime.Layer();
@@ -58,30 +58,36 @@ game.start = function(){
         .setFill('assets/stop_sign.png')
         .setOpacity(1);
 
-    this.btn_bell = new lime.GlossyButton('bell') 
+    this.btn_sound = new lime.Label('Derek') 
         .setSize(70, 50)
+        .setFontSize(50)
+        .setFontWeight('bold')
         .setPosition(50, 50);
 
+    this.btn_sound.sounds = [new lime.audio.Audio('assets/bell.mp3'),
+        new lime.audio.Audio('assets/whistle.mp3')];
+    this.btn_sound.sound_index = 0;    
 
-    this.btn_whistle = new lime.GlossyButton('whistle')
-        .setSize(70, 50)
-        .setPosition(50, 120);
-    this.btn_bell.bellSound = new lime.audio.Audio('assets/bell.mp3');
-    this.btn_whistle.whistleSound = new lime.audio.Audio('assets/whistle.mp3');
-
-    goog.events.listen(this.btn_bell, 'click', function() {
-        this.bellSound.stop();
-        this.bellSound.play();
-    });    
-    goog.events.listen(this.btn_whistle, 'click', function() {
-        this.whistleSound.stop();
-        this.whistleSound.play();
+    goog.events.listen(this.btn_sound, 'click', function() {
+        this.sound_index = (this.sound_index + 1) % 2;
+        if (this.sound_index == 1) {
+            this.setText("Daniel");
+        } else {
+            this.setText("Derek");
+        }
+        var i = Math.floor(Math.random() * 2);
+        this.sounds[i].stop();
+        this.sounds[i].play();
+        var x = Math.random() * game.WIDTH;
+        var y = Math.random() * game.HEIGHT;
+        this.setPosition(x, y);
+        this.setFontColor(Math.random() * 100, Math.random() * 100, 
+            Math.random() * 100);
     });    
 
     layer.appendChild(this.board);
     layer.appendChild(this.train);
-    layer.appendChild(this.btn_bell);
-    layer.appendChild(this.btn_whistle);
+    layer.appendChild(this.btn_sound);
     layer.appendChild(this.stop_sign);
     scene.appendChild(layer);
 
