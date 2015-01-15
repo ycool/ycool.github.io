@@ -12,6 +12,7 @@ goog.require('lime.animation.Spawn');
 goog.require('lime.animation.FadeTo');
 goog.require('lime.animation.ScaleTo');
 goog.require('lime.animation.MoveTo');
+goog.require('lime.animation.RotateTo');
 goog.require('goog.events.KeyCodes');
 goog.require('lime.audio.Audio');
 goog.require('lime.GlossyButton');
@@ -26,19 +27,20 @@ game.HEIGHT = 1004;
 // entrypoint
 game.start = function(){
 
-    this.WIDTH = 600;
-    this.HEIGHT = 600;
     this.TRAIN_WIDTH = 100;
     this.TRAIN_HEIGHT = 100;
     this.STEP = 10;
 
-	var director = new lime.Director(document.body, game.WIDTH, game.HEIGHT);
+	var director = new lime.Director(document.body); //, game.WIDTH, game.HEIGHT);
     director.makeMobileWebAppCapable();
+
+    this.WIDTH = director.getSize().width;
+    this.HEIGHT = director.getSize().height;
 
     var scene = new lime.Scene();
     var layer = new lime.Layer();
 
-    this.board = new lime.Sprite().setSize(this.WIDTH, this.HEIGHT)
+    this.board = new lime.Sprite().setSize(director.getSize())
         .setAnchorPoint(0, 0)
         .setPosition(0, 0)
         .setFill(100, 1, 1, 0.1);
@@ -138,10 +140,13 @@ game.moveAStep = function() {
     var xdiff = Math.min(Math.abs(pos_start.x - pos_target.x), this.STEP);
     var ydiff = Math.min(Math.abs(pos_start.y - pos_target.y), this.STEP);
     if (pos_start.x < pos_target.x) {
+        this.train.runAction(new lime.animation.RotateTo(0).setDuration(0.2));
         pos.x += xdiff;
     } else if (pos_start.x > pos_target.x) {
+        this.train.runAction(new lime.animation.RotateTo(0).setDuration(0.2));
         pos.x -= xdiff;
     } else {
+        this.train.runAction(new lime.animation.RotateTo(90).setDuration(.2));
         if (pos_start.y < pos_target.y) {
             pos.y += ydiff;
         } else {
