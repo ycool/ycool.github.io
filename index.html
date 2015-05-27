@@ -2,12 +2,17 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
     <!-- ads sense setup -->
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- test -->
@@ -15,6 +20,7 @@
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+
 
 
     <title>YCool</title>
@@ -42,9 +48,32 @@
     })(window, document, 'script', 'dataLayer', 'GTM-MMKBF8');
     </script>
     <!-- End Google Tag Manager -->
+
+
     <div class="container" align="center">
+
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#youtube">Popular Youtube Today</a></li>
+    <li><a data-toggle="tab" href="#image">Popular Images Today</a></li>
+    <li><a data-toggle="tab" href="#query">Popular Queries Today</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="youtube" class="tab-pane fade in active">
     <!-- top youtube videos -->
         <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLrEnWoR732-BHrPp_Pm8_VleD68f9s14-" frameborder="0" allowfullscreen></iframe>
+
+    </div>
+    <div id="image" class="tab-pane fade">
+      <h3>image coming ...</h3>
+    </div>
+    <div id="query" class="tab-pane fade">
+      <h3>query coming ...</h3>
+    </div>
+  </div>
+</div>
+
 
         <!-- add google search box -->
         <script>
@@ -62,6 +91,8 @@
         <gcse:search></gcse:search>
 
     </div>
+ 
+ 
 
 </body>
 
